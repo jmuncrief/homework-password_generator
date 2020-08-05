@@ -18,12 +18,14 @@ function getRand(arr) {
 // Main password generation function
 function generatePassword() {
 
-  debugger;
+  // debugger;
 
   // Un-ediatble arrays from which random characters are pulled
   const arrSpecial = "!@#$%^&*";
   const arrAlphabet = "abcdefghijklmnopqrstuvwxyz";
   const arrNum = "0123456789";
+
+  var pass = "";
 
   var options = {};
 
@@ -50,7 +52,7 @@ function generatePassword() {
 
     // Generates random number 0-3 used to select option at random
     // Repeats each time new character is generated
-    var optionSelect = (Math.floor(Math.random() * 3));
+    var optionSelect = (Math.floor(Math.random() * 4));
 
     if (options.special && optionSelect === 0) {
       var optionOut = getRand(arrSpecial);
@@ -69,8 +71,7 @@ function generatePassword() {
     }
 
     // Append generated character to previously generated characters
-    var pass = pass.concat(optionOut);
-
+    var pass = pass + optionOut;
   }
 
   return pass;
