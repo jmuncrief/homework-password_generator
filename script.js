@@ -9,40 +9,71 @@ function writePassword() {
   passwordText.value = password;
 
 }
+// Pull single random index from specified array
+function getRand(arr) {
+  var randOut = arr[(Math.floor(Math.random() * arr.length))];
+  return randOut;
+}
 
+// Main password generation function
 function generatePassword() {
+
+  debugger;
+
+  // Un-ediatble arrays from which random characters are pulled
+  const arrSpecial = "!@#$%^&*";
+  const arrAlphabet = "abcdefghijklmnopqrstuvwxyz";
+  const arrNum = "0123456789";
 
   var options = {};
 
+  // Prompt user for desired password length
   options.length = parseInt(prompt("How long would you like your password to be?"));
+
+  // Catch length requests outside min/max length parameters
   if (options.length < 8 || options.length > 128) {
-    alert("Alert goes here.");
+    alert("Please select a value between 8 and 128 (inclusive).");
     return;
   }
+
+  // Prompt user for character-inclusion options
   options.special = confirm("Would you like to include special characters?");
   options.numeric = confirm("Would you like to include numeric characters?");
   options.uppercase = confirm("Would you like to include uppercase characters?");
   options.lowercase = confirm("Would you like to include lowercase characters?");
 
+  // Loop through selected options, generating 1 random character per pass
   for (var i = 0; i < options.length; i++) {
 
-    if (options.special) {
+    // Clears optionOut variable at start of loop
+    var optionOut = null;
 
+    // Generates random number 0-3 used to select option at random
+    // Repeats each time new character is generated
+    var optionSelect = (Math.floor(Math.random() * 3));
+
+    if (options.special && optionSelect === 0) {
+      var optionOut = getRand(arrSpecial);
     }
 
-    if (options.numeric) {
-
+    if (options.numeric && optionSelect === 1) {
+      var optionOut = getRand(arrNum);
     }
 
-    if (options.uppercase) {
-
+    if (options.uppercase && optionSelect === 2) {
+      var optionOut = getRand(arrAlphabet).toUpperCase();
     }
 
-    if (options.lowercase) {
-
+    if (options.lowercase && optionSelect === 3) {
+      var optionOut = getRand(arrAlphabet);
     }
+
+    // Append generated character to previously generated characters
+    var pass = pass.concat(optionOut);
 
   }
+
+  return pass;
 
 }
 
