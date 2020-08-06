@@ -54,6 +54,8 @@ function generatePassword() {
     // Repeats each time new character is generated
     var optionSelect = (Math.floor(Math.random() * 4));
 
+    // if statements selected to run based off combination of two parameters
+    // Only 1 if statement runs per run of for loop
     if (options.special && optionSelect === 0) {
       var optionOut = getRand(arrSpecial);
     }
@@ -74,6 +76,7 @@ function generatePassword() {
     var pass = pass + optionOut;
   }
 
+  // Generated password returned as output of generatePassword function
   return pass;
 
 }
