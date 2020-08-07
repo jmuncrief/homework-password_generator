@@ -33,9 +33,9 @@ function generatePassword() {
   options.length = parseInt(prompt("How long would you like your password to be?"));
 
   // Catch length requests outside min/max length parameters
-  if (options.length < 8 || options.length > 128) {
+  if (options.length < 8 || options.length > 128 || isNaN(options.length)) {
     alert("Please select a value between 8 and 128 (inclusive).");
-    return;
+    return "";
   }
 
   // Prompt user for character-inclusion options
@@ -44,42 +44,73 @@ function generatePassword() {
   options.uppercase = confirm("Would you like to include uppercase characters?");
   options.lowercase = confirm("Would you like to include lowercase characters?");
 
-  // Loop through selected options, generating 1 random character per pass
-  for (var i = 0; i < options.length; i++) {
+  // Guard against impossible password
+  if (!options.special && !options.numeric && !options.uppercase && !options.lowercase) {
+    alert("Please select at least one option.")
+    return "";
+  }
 
-    // Clears optionOut variable at start of loop
+  while (pass.length < options.length) {
+
     var optionOut = null;
 
-    // Generates random number 0-3 used to select option at random
-    // Repeats each time new character is generated
     var optionSelect = (Math.floor(Math.random() * 4));
 
-    // if statements selected to run based off combination of two parameters
-    // Only 1 if statement runs per run of for loop
     if (options.special && optionSelect === 0) {
       var optionOut = getRand(arrSpecial);
     }
-
     if (options.numeric && optionSelect === 1) {
       var optionOut = getRand(arrNum);
     }
-
     if (options.uppercase && optionSelect === 2) {
       var optionOut = getRand(arrAlphabet).toUpperCase();
     }
-
     if (options.lowercase && optionSelect === 3) {
       var optionOut = getRand(arrAlphabet);
     }
 
-    // Append generated character to previously generated characters
-    var pass = pass + optionOut;
+    if (optionOut !== null) {
+      pass = pass + optionOut;
+    } 
   }
-
-  // Generated password returned as output of generatePassword function
   return pass;
-
 }
 
 // Add event listener to generate button
 generateBtn.addEventListener("click", writePassword);
+
+
+
+  // Loop through selected options, generating 1 random character per pass
+  // for (var i = 0; i < options.length; i++) {
+
+    // Clears optionOut variable at start of loop
+    // var optionOut = null;
+
+    // Generates random number 0-3 used to select option at random
+    // Repeats each time new character is generated
+    // var optionSelect = (Math.floor(Math.random() * 4));
+
+    // if statements selected to run based off combination of two parameters
+    // Only 1 if statement runs per run of for loop
+    // if (options.special && optionSelect === 0) {
+      //   var optionOut = getRand(arrSpecial);
+      // }
+
+      // if (options.numeric && optionSelect === 1) {
+        //   var optionOut = getRand(arrNum);
+        // }
+
+        // if (options.uppercase && optionSelect === 2) {
+          //   var optionOut = getRand(arrAlphabet).toUpperCase();
+          // }
+
+          // if (options.lowercase && optionSelect === 3) {
+            //   var optionOut = getRand(arrAlphabet);
+            // }
+            //   // Append generated character to previously generated characters
+            //   var pass = pass + optionOut;
+            // }
+
+            // // Generated password returned as output of generatePassword function
+            // return pass;
